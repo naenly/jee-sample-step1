@@ -67,7 +67,7 @@ public class PerfilDaoJdbc implements PerfilDao {
             // 3. actualizar perfilo en la base de datos
             
             PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
-            preparedStatement.setString(1, "Burn uno");
+            preparedStatement.setString(1, "Usuario2");
             preparedStatement.setInt(2, 4);
 // execute insert SQL stetement
             preparedStatement .executeUpdate();

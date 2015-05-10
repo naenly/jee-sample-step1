@@ -1,7 +1,7 @@
 package edu.uan.fis.jeesample.dao.impl;
 
-import edu.uan.fis.jeesample.dao.EmpleadoDao;
-import edu.uan.fis.jeesample.dto.Empleado;
+import edu.uan.fis.jeesample.dao.ComprasDao;
+import edu.uan.fis.jeesample.dto.Compras;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  * @author lenovo
  */
 
-public class EmpleadoDaoJdbc implements EmpleadoDao {
+public class ComprasDaoJdbc implements ComprasDao {
     
-    public Empleado create(Empleado empleado) {
+    public Compras create(Compras compras) {
         // Sample code
         Connection conn = null;
          PreparedStatement stmt = null;
@@ -30,36 +30,34 @@ public class EmpleadoDaoJdbc implements EmpleadoDao {
             Class.forName("com.mysql.jdbc.Driver");
             // 2. Get the connection for the URL jdbc:mysql://address:port/dbname?user=username&password=userpassword
             conn = DriverManager.getConnection("jdbc:mysql://localhost/catalogotienda?" + "user=root&password=admin");
-            // 3. Creates the empleado in the database
-            String insertData= "INSERT INTO `tbl_empleado`(`nom_empleado`, `user`, `password`,`id_perfil`)  VALUES (?,?,?,?)";
+            // 3. Creates the compras in the database
+            String insertData= "INSERT INTO `tbl_compras`(`id_cliente`, `id_product`)  VALUES (?,?)";
             stmt = conn.prepareStatement(insertData);
             
-            stmt.setString(1,empleado.getName());
-            stmt.setString(2,empleado.getUser());
-            stmt.setString(3,empleado.getPassword());
-            stmt.setInt(4,empleado.getPerfilId());
+            stmt.setInt(1,compras.getClienteId());
+            stmt.setInt(2,compras.getProductId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 stmt.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return empleado;
+        return compras;
     }
     
-    public Empleado update(Empleado empleado) {
+    public Compras update(Compras compras) {
         
          Connection conn = null;
         PreparedStatement stmt = null;
@@ -68,38 +66,38 @@ public class EmpleadoDaoJdbc implements EmpleadoDao {
             Class.forName("com.mysql.jdbc.Driver");
             // 2. Get the connection for the URL jdbc:mysql://address:port/dbname?user=username&password=userpassword
             conn = DriverManager.getConnection("jdbc:mysql://localhost/catalogotienda?" + "user=root&password=admin");
-            String updateTableSQL = "UPDATE tbl_empleado SET nom_empleado = ? WHERE id_empleado = ?";
+            String updateTableSQL = "UPDATE tbl_compras SET id_cliente = ? WHERE id_compra = ?";
             stmt = conn.prepareStatement(updateTableSQL);
-            // 3. actualizar empleado en la base de datos
+            // 3. actualizar compras en la base de datos
             
             PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
-            preparedStatement.setString(1, "Empleado mes");
-            preparedStatement.setInt(2, 4);
+            preparedStatement.setInt(1,2);
+            preparedStatement.setInt(2,1);
 // execute insert SQL stetement
             preparedStatement .executeUpdate();
-            //stmt.executeUpdate("INSERT INTO tbl_empleado VALUES(" + empleado.getEmpleadoId() + ",'" + empleado.getName() + "')");
+            //stmt.executeUpdate("INSERT INTO tbl_compras VALUES(" + compras.getComprasId() + ",'" + compras.getName() + "')");
         } catch (SQLException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 stmt.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return empleado;
+        return compras;
     //}
         //throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public void delete(Empleado empleado) {
+    public void delete(Compras compras) {
        Connection conn = null;
         PreparedStatement stmt = null;
         try {
@@ -107,35 +105,35 @@ public class EmpleadoDaoJdbc implements EmpleadoDao {
             Class.forName("com.mysql.jdbc.Driver");
             // 2. Get the connection for the URL jdbc:mysql://address:port/dbname?user=username&password=userpassword
             conn = DriverManager.getConnection("jdbc:mysql://localhost/catalogotienda?" + "user=root&password=admin");
-            String updateTableSQL = "DELETE FROM tbl_empleado WHERE id_empleado = ?";
+            String updateTableSQL = "DELETE FROM tbl_compras WHERE id_compra = ?";
             stmt = conn.prepareStatement(updateTableSQL);
-            // 3. actualizar empleado en la base de datos           
+            // 3. actualizar compras en la base de datos           
             PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
             //preparedStatement.setString(1, 1);
             preparedStatement.setInt(1, 2);
 // execute insert SQL stetement
             preparedStatement .executeUpdate();
-            //stmt.executeUpdate("INSERT INTO tbl_empleado VALUES(" + empleado.getEmpleadoId() + ",'" + empleado.getName() + "')");
+            //stmt.executeUpdate("INSERT INTO tbl_compras VALUES(" + compras.getComprasId() + ",'" + compras.getName() + "')");
         } catch (SQLException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 stmt.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public Empleado findById(Integer empleadoId) {
-        Empleado empleado=null;
+    public Compras findById(Integer comprasId) {
+        Compras compras=null;
         Connection conn = null;
         ResultSet rs=null;
         PreparedStatement stmt = null;
@@ -144,112 +142,108 @@ public class EmpleadoDaoJdbc implements EmpleadoDao {
             Class.forName("com.mysql.jdbc.Driver");
             // 2. Get the connection for the URL jdbc:mysql://address:port/dbname?user=username&password=userpassword
             conn = DriverManager.getConnection("jdbc:mysql://localhost/catalogotienda?" + "user=root&password=admin");
-            String updateTableSQL = "Select * FROM tbl_empleado WHERE id_empleado = ?";
+            String updateTableSQL = "Select * FROM tbl_compras WHERE id_compra = ?";
             stmt = conn.prepareStatement(updateTableSQL);
-            // 3. actualizar empleado en la base de datos
+            // 3. actualizar compras en la base de datos
             PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
             //preparedStatement.setString(1, 1);
-            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(1, 3);
 // execute insert SQL stetement
             rs=preparedStatement.executeQuery();
             while (rs.next())
             {
-            empleado=new Empleado();
+            compras=new Compras();
          
-            int idempleado=rs.getInt("id_empleado");
-             
-            String nombre=rs.getString("nom_empleado");
-               
-            empleado.setEmpleadoId(idempleado);
-             System.out.println(idempleado);
-            empleado.setName(nombre);
-             System.out.println(nombre);
+            int idcompras=rs.getInt("id_compra");                   
+              int idproducto=rs.getInt("id_product");  
+            compras.setComprasId(idcompras);
+             System.out.println(idcompras);
+            compras.setProductId(idproducto);
+             System.out.println(idproducto);
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 stmt.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return empleado;
+        return compras;
     }
     
-    public List<Empleado> findAll() {
-        Empleado empleado=null;
+    public List<Compras> findAll() {
+        Compras compras=null;
         Connection conn = null;
         ResultSet rs=null;
         PreparedStatement stmt = null;
-            List<Empleado> empleados = new ArrayList<Empleado>();
+            List<Compras> comprass = new ArrayList<Compras>();
 
         try {
             // 1. Register the JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
             // 2. Get the connection for the URL jdbc:mysql://address:port/dbname?user=username&password=userpassword
             conn = DriverManager.getConnection("jdbc:mysql://localhost/catalogotienda?" + "user=root&password=admin");
-            String updateTableSQL = "Select * FROM tbl_empleado";
+            String updateTableSQL = "Select * FROM tbl_compras";
             stmt = conn.prepareStatement(updateTableSQL);
-            // 3. actualizar empleado en la base de datos
+            // 3. actualizar compras en la base de datos
             
             PreparedStatement preparedStatement = conn.prepareStatement(updateTableSQL);
             preparedStatement.executeQuery();
             rs=preparedStatement.executeQuery();
             while (rs.next())
             {
-            empleado=new Empleado();
-            empleado.setEmpleadoId(rs.getInt("id_empleado"));
-            empleado.setName(rs.getString("nom_empleado"));
-            empleados.add(empleado);
+            compras=new Compras();
+            compras.setComprasId(rs.getInt("id_compra"));
+            compras.setProductId(rs.getInt("id_product"));
+            comprass.add(compras);
          
-            int idempleado=rs.getInt("id_empleado");             
-            String nombre=rs.getString("nom_empleado");
-            String usuario=rs.getString("user");
-            int idperfil=rs.getInt("id_perfil"); 
-            empleado.setName(nombre);  
-            empleado.setUser(usuario);
-            empleado.setEmpleadoId(idempleado);
-            empleado.setPerfilId(idperfil);
-             System.out.println("ID: "+idempleado+" Nombre Empleado: "+nombre+" Nombre de Usuario: "+usuario+" Perfil: "+idperfil);
+            int idcompras=rs.getInt("id_compra");             
+            int idproducto=rs.getInt("id_product"); 
+            int idcliente=rs.getInt("id_cliente");
+            compras.setComprasId(idcompras);  
+            compras.setClienteId(idcliente);
+            compras.setProductId(idproducto);
+             System.out.println("ID: "+idcompras+" ID Producto: "+idproducto+" ID Cliente: "+idcliente);
                  
             }
-            //stmt.executeUpdate("INSERT INTO tbl_empleado VALUES(" + empleado.getEmpleadoId() + ",'" + empleado.getName() + "')");
+            //stmt.executeUpdate("INSERT INTO tbl_compras VALUES(" + compras.getComprasId() + ",'" + compras.getName() + "')");
         } catch (SQLException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
              try {
                 rs.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 stmt.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ComprasDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return empleados;
+        return comprass;
     }
 }
 
